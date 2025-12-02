@@ -2,32 +2,39 @@ const TetoFront = "../assets/tetoFront.png";
 const TetoLeft = "../assets/tetoLeft.png";
 const TetoRight = "../assets/tetoRight.png";
 const TetoEmote1 = "../assets/tetoEmote1.png";
-
+const TetoImpact = "../assets/tetoImpact.jpeg";
+const explosion = new Audio("../assets/explosion.mp3");
+const tacoBell = new Audio("../assets/tacoBell.mp3");
 const Teto = document.getElementById('Teto')
-const Hook = document.getElementById('Hook')
-const body = document.getElementById('body')
-const dragElement = document.querySelector('.dragElement')  // Added
 
-Teto.addEventListener("click", () => emote("1"))
 
-// Changed to mouseenter/mouseleave for better compatibility
-Hook.addEventListener("mouseenter", () => {Hook.classList.add('HookActive')})
-Hook.addEventListener("mouseleave", () => {Hook.classList.remove('HookActive')})
-body.addEventListener("mouseenter", () => {Hook.classList.remove('hidden')})
-body.addEventListener("mouseleave", () => {Hook.classList.add('hidden')})
+Teto.addEventListener("click", () => emote("bong"))
 
-// Add events for dragElement to keep Hook visible
-dragElement.addEventListener("mouseenter", () => {Hook.classList.remove('hidden')})
-dragElement.addEventListener("mouseleave", () => {Hook.classList.add('hidden')})
-
-function emote(emote){
-    switch(emote) {
-        case "1":
+function emote(emote) {
+    switch (emote) {
+        case "bong":
             Teto.src = TetoEmote1;
+            tacoBell.play();
             setTimeout(() => {
                 Teto.src = TetoFront;
-            }, 500);
-            console.log("emote")
+            }, 200);
+            break;
+        case "fall":
+            let interval;
+            window.electron.onWindowPosition((data) => {
+                if (data.hitBottom && interval) {
+                    clearInterval(interval);
+                    Teto.src = TetoImpact;
+                    explosion.play();
+                    setTimeout(() => {
+                        Teto.src = TetoFront;
+                    }, 2000);
+                }
+            })
+            interval = setInterval(() => {
+                window.electron.moveWindow(0, 5)
+                window.electron.resetSize()
+            }, 10);
             break;
     }
 }

@@ -1,7 +1,8 @@
 body{
     margin: 0;
-    height: 300px;
-    width: 300px;
+    height: 250px;
+    width: 200px;
+    overflow: hidden;
 }
 
 .Teto{
@@ -12,36 +13,19 @@ body{
     top: 50px;
     z-index: 10;
 }
-.Hook{
-    position: absolute;
-    width: 100px;
-    height: 150px;
-    top: -125px;
-    transition:200ms;
-    margin: auto;
-    left: 50px;
-    background-image: url('../assets/hook.png');
-    background-size: cover;
-    z-index: 5;
-}
-.dragElement{
-    position: absolute;
+
+.topMenu{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
     top: 0;
-    left: 50px;
-    margin: auto;
-    width: 100px;
+    width: 200px;
     height: 20px;
-    background-color: red;
-    opacity: 0.5;
-    z-index: 15;
-    -webkit-app-region: drag;
+    background-color: rgb(189, 235, 255);
 }
-.HookActive{
-    top: -60px;
-}
-.visible{
-    display: block;
-}
-.hidden{
-    display: none;
+.drag{
+ -webkit-app-region: drag;
+ height: 20px;
+ width: 50px;
+ background-color: aqua;
 }
